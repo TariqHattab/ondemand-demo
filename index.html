@@ -17,9 +17,11 @@
       --page: #F5F7FB;
       --card: #FFFFFF;
     }
+    /* Dark follows the device until the visitor picks one with the header button (data-theme). */
     @media (prefers-color-scheme: dark) {
-      :root { --brand-soft: #1B2747; --ink: #ECEEF4; --muted: #A2A8B8; --line: #2A2F3D; --page: #0F1218; --card: #171B24; }
+      :root:not([data-theme="light"]) { --brand-soft: #1B2747; --ink: #ECEEF4; --muted: #A2A8B8; --line: #2A2F3D; --page: #0F1218; --card: #171B24; }
     }
+    :root[data-theme="dark"] { --brand-soft: #1B2747; --ink: #ECEEF4; --muted: #A2A8B8; --line: #2A2F3D; --page: #0F1218; --card: #171B24; }
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; }
     body {
@@ -41,6 +43,8 @@
     header .spacer { flex: 1; }
     .ghost { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 14px; border-radius: 8px; }
     .ghost:hover { border-color: var(--brand); color: var(--brand); }
+    .ghost.icon { padding: 6px 8px; line-height: 0; }
+    .ghost.icon svg { width: 20px; height: 20px; fill: currentColor; }
 
     main { display: flex; gap: 32px; padding: 24px; justify-content: center; align-items: flex-start; }
 
@@ -94,6 +98,7 @@
     <h1 data-en="OnDemand" data-ar="أون ديماند">OnDemand</h1>
     <span class="tag" data-en="Demo with sample data" data-ar="نسخة تجريبية ببيانات وهمية">Demo with sample data</span>
     <span class="spacer"></span>
+    <button class="ghost icon" id="theme" type="button"></button>
     <button class="ghost" id="lang">عربي</button>
     <button class="ghost" id="reset" data-en="Reset demo" data-ar="إعادة ضبط">Reset demo</button>
   </header>
@@ -175,7 +180,40 @@
         var guide = document.getElementById('guide-' + lang).innerHTML;
         document.getElementById('guide').innerHTML = guide;
         document.getElementById('guide-mobile').innerHTML = guide;
+        applyTheme();
       }
+
+      // Light or dark for the page and both apps: the apps read the saved choice when they start and follow the
+      // channel's {"theme": ...} messages while open (followDemoTheme in packages/core).
+      var themeKey = 'ondemand.demo.page.theme';
+      var theme = null;
+      try { theme = localStorage.getItem(themeKey); } catch (e) {}
+      var deviceDark = window.matchMedia('(prefers-color-scheme: dark)');
+      var channel = 'BroadcastChannel' in window ? new BroadcastChannel('ondemand-demo') : null;
+      var icons = {
+        sun: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zm12.02 12.02 1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>',
+        moon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.3 2a9.5 9.5 0 1 0 9.7 11.6A7.5 7.5 0 0 1 12.3 2z"/></svg>'
+      };
+
+      function isDark() { return theme ? theme === 'dark' : deviceDark.matches; }
+
+      function applyTheme() {
+        if (theme) document.documentElement.dataset.theme = theme;
+        else delete document.documentElement.dataset.theme;
+        var button = document.getElementById('theme');
+        button.innerHTML = isDark() ? icons.sun : icons.moon;
+        var label = isDark() ? (lang === 'ar' ? 'الوضع الفاتح' : 'Light mode') : (lang === 'ar' ? 'الوضع الداكن' : 'Dark mode');
+        button.title = label;
+        button.setAttribute('aria-label', label);
+      }
+
+      document.getElementById('theme').addEventListener('click', function () {
+        theme = isDark() ? 'light' : 'dark';
+        try { localStorage.setItem(themeKey, theme); } catch (e) {}
+        if (channel) channel.postMessage(JSON.stringify({ theme: theme }));
+        applyTheme();
+      });
+      deviceDark.addEventListener('change', applyTheme);
 
       // Fit both phones in the window's height.
       function fit() {
@@ -197,12 +235,12 @@
         apply();
       });
 
-      // Starts over: the sample data and both apps' sign-ins.
+      // Starts over: the sample data and both apps' sign-ins (the page's own language and theme stay).
       document.getElementById('reset').addEventListener('click', function () {
         var message = lang === 'ar' ? 'إعادة البيانات التجريبية لحالتها الأولى؟' : 'Put the sample data back the way it started?';
         if (!confirm(message)) return;
         try {
-          Object.keys(localStorage).forEach(function (key) { if (key.indexOf('ondemand.') === 0) localStorage.removeItem(key); });
+          Object.keys(localStorage).forEach(function (key) { if (key.indexOf('ondemand.') === 0 && key.indexOf('ondemand.demo.page.') !== 0) localStorage.removeItem(key); });
         } catch (e) {}
         ['customer', 'provider'].forEach(function (app) {
           var frame = document.getElementById(app);
