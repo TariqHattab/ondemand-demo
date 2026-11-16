@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Replaced by `flutter build web --base-href`; the web demo serves each app from its own folder. -->
+  <base href="/ondemand-demo/customer/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Home and car services on demand">
+  <meta name="theme-color" content="#1E5EFF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="OnDemand">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+  <title>OnDemand</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #1E5EFF; }
+    #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    #loading img { width: 96px; height: 96px; border-radius: 22px; animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 50% { transform: scale(0.92); opacity: 0.7; } }
+  </style>
+</head>
+<body>
+  <div id="loading"><img src="icons/Icon-192.png" alt=""></div>
+  <script>
+    // Hide the loading mark once Flutter draws its first frame.
+    window.addEventListener('flutter-first-frame', function () { document.getElementById('loading').remove(); });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

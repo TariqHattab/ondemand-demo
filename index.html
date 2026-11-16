@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1E5EFF">
+  <meta name="description" content="Try the OnDemand customer and technician apps in your browser.">
+  <title>OnDemand demo</title>
+  <link rel="icon" type="image/png" href="customer/favicon.png">
+  <style>
+    :root {
+      --brand: #1E5EFF;
+      --brand-soft: #E8EFFF;
+      --ink: #14161F;
+      --muted: #5C6273;
+      --line: #E3E6EE;
+      --page: #F5F7FB;
+      --card: #FFFFFF;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --brand-soft: #1B2747; --ink: #ECEEF4; --muted: #A2A8B8; --line: #2A2F3D; --page: #0F1218; --card: #171B24; }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background: var(--page);
+      color: var(--ink);
+      font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+    }
+    [dir="rtl"] body { font-family: Tahoma, "Segoe UI", system-ui, sans-serif; }
+    a { color: var(--brand); }
+    button { font: inherit; cursor: pointer; }
+
+    header {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding: 14px 24px; border-bottom: 1px solid var(--line); background: var(--card);
+    }
+    header img { width: 36px; height: 36px; border-radius: 9px; }
+    header h1 { font-size: 18px; margin: 0; }
+    header .tag { font-size: 12px; color: var(--brand); background: var(--brand-soft); padding: 2px 8px; border-radius: 99px; }
+    header .spacer { flex: 1; }
+    .ghost { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 14px; border-radius: 8px; }
+    .ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+    main { display: flex; gap: 32px; padding: 24px; justify-content: center; align-items: flex-start; }
+
+    .guide { width: 300px; flex: none; }
+    .guide h2 { font-size: 16px; margin: 0 0 4px; }
+    .guide p { color: var(--muted); margin: 0 0 14px; }
+    .guide ol { margin: 0; padding-inline-start: 20px; }
+    .guide li { margin-bottom: 10px; }
+    .guide li b { color: var(--ink); }
+    .code { font: 600 14px ui-monospace, Menlo, monospace; background: var(--brand-soft); color: var(--brand); padding: 1px 6px; border-radius: 6px; }
+    .note { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px; }
+    .credit { font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+    .phones { display: flex; gap: 28px; }
+    .phone { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .phone .label { font-weight: 600; }
+    .phone .label small { display: block; text-align: center; font-weight: 400; color: var(--muted); }
+    .frame {
+      width: calc(390px * var(--scale)); height: calc(844px * var(--scale));
+      border-radius: calc(48px * var(--scale)); padding: calc(12px * var(--scale));
+      background: #0B0D12; box-shadow: 0 20px 50px rgba(20, 30, 60, .18);
+    }
+    .frame iframe {
+      width: 390px; height: 820px; border: 0; border-radius: 36px; background: var(--brand);
+      transform: scale(var(--scale)); transform-origin: top left;
+    }
+    [dir="rtl"] .frame iframe { transform-origin: top right; }
+
+    /* Phones and narrow windows: pick an app and open it full screen. */
+    .choose { display: none; padding: 20px 16px 32px; max-width: 520px; margin: 0 auto; }
+    .choose a.app {
+      display: flex; align-items: center; gap: 14px; padding: 16px; margin-bottom: 12px; text-decoration: none;
+      color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    }
+    .choose a.app img { width: 56px; height: 56px; border-radius: 14px; }
+    .choose a.app b { display: block; font-size: 16px; }
+    .choose a.app span { color: var(--muted); font-size: 14px; }
+    .choose .guide { width: auto; margin-top: 20px; }
+
+    @media (max-width: 1080px) { .guide.side { display: none; } }
+    @media (max-width: 820px) {
+      main { display: none; }
+      .choose { display: block; }
+      header { padding: 12px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="customer/icons/Icon-192.png" alt="">
+    <h1 data-en="OnDemand" data-ar="أون ديماند">OnDemand</h1>
+    <span class="tag" data-en="Demo with sample data" data-ar="نسخة تجريبية ببيانات وهمية">Demo with sample data</span>
+    <span class="spacer"></span>
+    <button class="ghost" id="lang">عربي</button>
+    <button class="ghost" id="reset" data-en="Reset demo" data-ar="إعادة ضبط">Reset demo</button>
+  </header>
+
+  <main>
+    <section class="guide side" id="guide"></section>
+    <div class="phones">
+      <div class="phone">
+        <div class="label"><span data-en="Customer app" data-ar="تطبيق العميل">Customer app</span>
+          <small data-en="Signed in as Sara" data-ar="باسم سارة">Signed in as Sara</small></div>
+        <div class="frame"><iframe id="customer" title="Customer app" allow="clipboard-write"></iframe></div>
+      </div>
+      <div class="phone">
+        <div class="label"><span data-en="Technician app" data-ar="تطبيق الفني">Technician app</span>
+          <small data-en="Signed in as Ali, AC technician" data-ar="باسم علي، فني تكييف">Signed in as Ali, AC technician</small></div>
+        <div class="frame"><iframe id="provider" title="Technician app" allow="clipboard-write"></iframe></div>
+      </div>
+    </div>
+  </main>
+
+  <section class="choose">
+    <a class="app" href="customer/">
+      <img src="customer/icons/Icon-192.png" alt="">
+      <div><b data-en="Customer app" data-ar="تطبيق العميل">Customer app</b>
+        <span data-en="Book home and car services" data-ar="اطلب خدمات المنزل والسيارة">Book home and car services</span></div>
+    </a>
+    <a class="app" href="provider/">
+      <img src="provider/icons/Icon-192.png" alt="">
+      <div><b data-en="Technician app" data-ar="تطبيق الفني">Technician app</b>
+        <span data-en="Accept jobs and get paid" data-ar="اقبل الطلبات واستلم أرباحك">Accept jobs and get paid</span></div>
+    </a>
+    <section class="guide" id="guide-mobile"></section>
+  </section>
+
+  <template id="guide-en">
+    <h2>Try a full booking</h2>
+    <p>Everything runs in your browser with sample data. Nothing is sent anywhere.</p>
+    <ol>
+      <li><b>Sign in</b> to both apps with any mobile number (05…) and the code <span class="code">141988</span>.</li>
+      <li>In the <b>customer app</b>, pick <b>Air conditioning › Split AC maintenance</b>, choose <b>علي للتكييف</b> (Ali), a time and <b>cash</b>.</li>
+      <li>In the <b>technician app</b>, open the offer and <b>accept</b> it.</li>
+      <li>Tap <b>On my way</b>. The customer sees the arrival time and a 4-digit <b>start code</b>.</li>
+      <li>Enter the code to <b>start</b>, then <b>complete</b> the job and confirm the cash.</li>
+      <li><b>Rate</b> each other, and add a <b>tip</b> from the customer app. It shows in Ali's <b>wallet</b>.</li>
+    </ol>
+    <p class="note">Also try favourites, booking history, loyalty points, chat, support and the help assistant.
+      On a phone, open an app and use <b>Add to Home Screen</b> to get an app icon. Payments use a test gateway that
+      approves instantly; maps, push notifications and the AI assistant are placeholders in this demo.</p>
+    <p class="credit">Sample pictures drawn from Google's Material Icons (CC BY 4.0).</p>
+  </template>
+  <template id="guide-ar">
+    <h2>جرّب طلباً كاملاً</h2>
+    <p>كل شيء يعمل داخل المتصفح ببيانات تجريبية، ولا يُرسل أي شيء.</p>
+    <ol>
+      <li><b>سجّل الدخول</b> في التطبيقين بأي رقم جوال (05…) والرمز <span class="code">141988</span>.</li>
+      <li>في <b>تطبيق العميل</b> اختر <b>التكييف › صيانة وتنظيف مكيف سبليت</b>، ثم <b>علي للتكييف</b> وموعداً والدفع <b>نقداً</b>.</li>
+      <li>في <b>تطبيق الفني</b> افتح العرض و<b>اقبله</b>.</li>
+      <li>اضغط <b>في الطريق</b>، فيرى العميل وقت الوصول و<b>رمز البدء</b> المكوّن من 4 أرقام.</li>
+      <li>أدخل الرمز لـ<b>بدء</b> العمل، ثم <b>أنهِ</b> الطلب وأكّد استلام المبلغ.</li>
+      <li><b>قيّما</b> بعضكما، وأضف <b>إكرامية</b> من تطبيق العميل لتظهر في <b>محفظة</b> علي.</li>
+    </ol>
+    <p class="note">جرّب أيضاً المفضلة وسجل الطلبات ونقاط الولاء والمحادثة والدعم والمساعد. على الجوال افتح أحد
+      التطبيقين واختر <b>إضافة إلى الشاشة الرئيسية</b> ليظهر كأيقونة تطبيق. الدفع عبر بوابة تجريبية توافق فوراً،
+      والخرائط والإشعارات والمساعد الذكي محاكاة في هذه النسخة.</p>
+    <p class="credit">الصور التجريبية مرسومة من أيقونات Material من Google (رخصة CC BY 4.0).</p>
+  </template>
+
+  <script>
+    (function () {
+      var lang = 'en';
+      try { lang = localStorage.getItem('ondemand.demo.page.lang') || (navigator.language || '').slice(0, 2); } catch (e) {}
+      if (lang !== 'ar') lang = 'en';
+
+      function apply() {
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        document.querySelectorAll('[data-en]').forEach(function (el) { el.textContent = el.dataset[lang]; });
+        document.getElementById('lang').textContent = lang === 'ar' ? 'English' : 'عربي';
+        var guide = document.getElementById('guide-' + lang).innerHTML;
+        document.getElementById('guide').innerHTML = guide;
+        document.getElementById('guide-mobile').innerHTML = guide;
+      }
+
+      // Fit both phones in the window's height.
+      function fit() {
+        var scale = Math.max(0.55, Math.min(1, (window.innerHeight - 150) / 844));
+        document.documentElement.style.setProperty('--scale', scale.toFixed(3));
+      }
+
+      function load() {
+        if (window.innerWidth <= 820) return;
+        ['customer', 'provider'].forEach(function (app) {
+          var frame = document.getElementById(app);
+          if (!frame.getAttribute('src')) frame.src = app + '/';
+        });
+      }
+
+      document.getElementById('lang').addEventListener('click', function () {
+        lang = lang === 'ar' ? 'en' : 'ar';
+        try { localStorage.setItem('ondemand.demo.page.lang', lang); } catch (e) {}
+        apply();
+      });
+
+      // Starts over: the sample data and both apps' sign-ins.
+      document.getElementById('reset').addEventListener('click', function () {
+        var message = lang === 'ar' ? 'إعادة البيانات التجريبية لحالتها الأولى؟' : 'Put the sample data back the way it started?';
+        if (!confirm(message)) return;
+        try {
+          Object.keys(localStorage).forEach(function (key) { if (key.indexOf('ondemand.') === 0) localStorage.removeItem(key); });
+        } catch (e) {}
+        ['customer', 'provider'].forEach(function (app) {
+          var frame = document.getElementById(app);
+          if (frame.getAttribute('src')) frame.src = app + '/';
+        });
+      });
+
+      window.addEventListener('resize', function () { fit(); load(); });
+      apply();
+      fit();
+      load();
+    })();
+  </script>
+</body>
+</html>
