@@ -39,7 +39,6 @@
     }
     header img { width: 36px; height: 36px; border-radius: 9px; }
     header h1 { font-size: 18px; margin: 0; }
-    header .tag { font-size: 12px; color: var(--brand); background: var(--brand-soft); padding: 2px 8px; border-radius: 99px; }
     header .spacer { flex: 1; }
     .ghost { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 14px; border-radius: 8px; }
     .ghost:hover { border-color: var(--brand); color: var(--brand); }
@@ -97,11 +96,10 @@
   <header>
     <img src="customer/icons/Icon-192.png" alt="">
     <h1 data-en="OnDemand" data-ar="أون ديماند">OnDemand</h1>
-    <span class="tag" data-en="Demo with sample data" data-ar="نسخة تجريبية ببيانات وهمية">Demo with sample data</span>
     <span class="spacer"></span>
     <button class="ghost icon" id="theme" type="button"></button>
     <button class="ghost" id="lang">عربي</button>
-    <button class="ghost" id="reset" data-en="Reset demo" data-ar="إعادة ضبط">Reset demo</button>
+    <button class="ghost" id="reset" data-en="Start over" data-ar="البدء من جديد">Start over</button>
   </header>
 
   <main>
@@ -136,41 +134,43 @@
 
   <template id="guide-en">
     <h2>Try a full booking</h2>
-    <p>Everything runs in your browser with sample data. Nothing is sent anywhere.</p>
+    <p>Sara books a visit in the customer app; Ali gets it in the technician app.</p>
     <ol>
-      <li><b>Sign in</b> to both apps with any mobile number (05…) and the code <span class="code">141988</span>.</li>
-      <li>In the <b>customer app</b>, pick <b>Air conditioning › Split AC maintenance</b>, choose <b>علي للتكييف</b> (Ali), a time and <b>cash</b>.</li>
+      <li>In the <b>customer app</b>, tap <b>Schedule</b>, pick <b>Split AC maintenance and cleaning</b>, choose <b>علي للتكييف</b> (Ali), a time and <b>cash</b>.</li>
       <li>In the <b>technician app</b>, open the offer and <b>accept</b> it.</li>
       <li>Tap <b>On my way</b>. The customer sees the arrival time and a 4-digit <b>start code</b>.</li>
       <li>Enter the code to <b>start</b>, then <b>complete</b> the job and confirm the cash.</li>
-      <li><b>Rate</b> each other, and add a <b>tip</b> from the customer app. It shows in Ali's <b>wallet</b>.</li>
+      <li><b>Rate</b> each other, and add a <b>tip</b> from the customer app. Both show in Ali's <b>Earnings</b>.</li>
     </ol>
-    <p class="note">Also try favourites, booking history, loyalty points, chat, support and the help assistant.
-      On a phone, open an app and use <b>Add to Home Screen</b> to get an app icon. Payments use a test gateway that
-      approves instantly; maps, push notifications and the AI assistant are placeholders in this demo.</p>
-    <p class="credit">Sample pictures drawn from Google's Material Icons (CC BY 4.0).</p>
+    <p class="note">Also try an <b>Urgent visit</b>, search, favourites, booking history, loyalty points, chat, support and
+      the help assistant. On a phone, open an app and use <b>Add to Home Screen</b> to get an app icon; signing in takes
+      any mobile number (05…) and the code <span class="code">141988</span>.</p>
+    <p class="credit">Photos from Pexels; icons from Google's Material Icons (CC BY 4.0).</p>
   </template>
   <template id="guide-ar">
     <h2>جرّب طلباً كاملاً</h2>
-    <p>كل شيء يعمل داخل المتصفح ببيانات تجريبية، ولا يُرسل أي شيء.</p>
+    <p>تحجز سارة زيارة من تطبيق العميل، ويستلمها علي في تطبيق الفني.</p>
     <ol>
-      <li><b>سجّل الدخول</b> في التطبيقين بأي رقم جوال (05…) والرمز <span class="code">141988</span>.</li>
-      <li>في <b>تطبيق العميل</b> اختر <b>التكييف › صيانة وتنظيف مكيف سبليت</b>، ثم <b>علي للتكييف</b> وموعداً والدفع <b>نقداً</b>.</li>
+      <li>في <b>تطبيق العميل</b> اضغط <b>موعد مجدول</b> واختر <b>صيانة وتنظيف مكيف سبليت</b>، ثم <b>علي للتكييف</b> وموعداً والدفع <b>نقداً</b>.</li>
       <li>في <b>تطبيق الفني</b> افتح العرض و<b>اقبله</b>.</li>
       <li>اضغط <b>في الطريق</b>، فيرى العميل وقت الوصول و<b>رمز البدء</b> المكوّن من 4 أرقام.</li>
       <li>أدخل الرمز لـ<b>بدء</b> العمل، ثم <b>أنهِ</b> الطلب وأكّد استلام المبلغ.</li>
-      <li><b>قيّما</b> بعضكما، وأضف <b>إكرامية</b> من تطبيق العميل لتظهر في <b>محفظة</b> علي.</li>
+      <li><b>قيّما</b> بعضكما، وأضف <b>إكرامية</b> من تطبيق العميل، ويظهر الاثنان في <b>أرباح</b> علي.</li>
     </ol>
-    <p class="note">جرّب أيضاً المفضلة وسجل الطلبات ونقاط الولاء والمحادثة والدعم والمساعد. على الجوال افتح أحد
-      التطبيقين واختر <b>إضافة إلى الشاشة الرئيسية</b> ليظهر كأيقونة تطبيق. الدفع عبر بوابة تجريبية توافق فوراً،
-      والخرائط والإشعارات والمساعد الذكي محاكاة في هذه النسخة.</p>
-    <p class="credit">الصور التجريبية مرسومة من أيقونات Material من Google (رخصة CC BY 4.0).</p>
+    <p class="note">جرّب أيضاً <b>الزيارة العاجلة</b> والبحث والمفضلة وسجل الطلبات ونقاط الولاء والمحادثة والدعم والمساعد. على
+      الجوال افتح أحد التطبيقين واختر <b>إضافة إلى الشاشة الرئيسية</b> ليظهر كأيقونة تطبيق، والدخول بأي رقم جوال (05…)
+      والرمز <span class="code">141988</span>.</p>
+    <p class="credit">الصور من Pexels، والأيقونات من أيقونات Material من Google (رخصة CC BY 4.0).</p>
   </template>
 
   <script>
     (function () {
+      // Starts every key this demo keeps in the browser; a brand demo (tool/brand.py) has its own, matching the apps'
+      // Brand.storagePrefix, so it can share a site with the main demo. A brand may also start in a set theme.
+      var ns = 'ondemand';
+      var defaultTheme = null;
       var lang = 'en';
-      try { lang = localStorage.getItem('ondemand.demo.page.lang') || (navigator.language || '').slice(0, 2); } catch (e) {}
+      try { lang = localStorage.getItem(ns + '.demo.page.lang') || (navigator.language || '').slice(0, 2); } catch (e) {}
       if (lang !== 'ar') lang = 'en';
 
       function apply() {
@@ -186,11 +186,15 @@
 
       // Light or dark for the page and both apps: the apps read the saved choice when they start and follow the
       // channel's {"theme": ...} messages while open (followDemoTheme in packages/core).
-      var themeKey = 'ondemand.demo.page.theme';
+      var themeKey = ns + '.demo.page.theme';
       var theme = null;
       try { theme = localStorage.getItem(themeKey); } catch (e) {}
+      if (!theme && defaultTheme) {
+        theme = defaultTheme;
+        try { localStorage.setItem(themeKey, theme); } catch (e) {}
+      }
       var deviceDark = window.matchMedia('(prefers-color-scheme: dark)');
-      var channel = 'BroadcastChannel' in window ? new BroadcastChannel('ondemand-demo') : null;
+      var channel = 'BroadcastChannel' in window ? new BroadcastChannel(ns + '-demo') : null;
       var icons = {
         sun: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zm12.02 12.02 1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>',
         moon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.3 2a9.5 9.5 0 1 0 9.7 11.6A7.5 7.5 0 0 1 12.3 2z"/></svg>'
@@ -222,30 +226,34 @@
         document.documentElement.style.setProperty('--scale', scale.toFixed(3));
       }
 
+      // In a frame the apps start in the page's language, already signed in (startInDemoFrame in packages/core).
+      function frameUrl(app) { return app + '/?frame=1&lang=' + lang; }
+
       function load() {
         if (window.innerWidth <= 820) return;
         ['customer', 'provider'].forEach(function (app) {
           var frame = document.getElementById(app);
-          if (!frame.getAttribute('src')) frame.src = app + '/';
+          if (!frame.getAttribute('src')) frame.src = frameUrl(app);
         });
       }
 
       document.getElementById('lang').addEventListener('click', function () {
         lang = lang === 'ar' ? 'en' : 'ar';
-        try { localStorage.setItem('ondemand.demo.page.lang', lang); } catch (e) {}
+        try { localStorage.setItem(ns + '.demo.page.lang', lang); } catch (e) {}
+        if (channel) channel.postMessage(JSON.stringify({ lang: lang }));
         apply();
       });
 
-      // Starts over: the sample data and both apps' sign-ins (the page's own language and theme stay).
+      // Starts over: the sample data and both apps' saved state (the page's own language and theme stay).
       document.getElementById('reset').addEventListener('click', function () {
         var message = lang === 'ar' ? 'إعادة البيانات التجريبية لحالتها الأولى؟' : 'Put the sample data back the way it started?';
         if (!confirm(message)) return;
         try {
-          Object.keys(localStorage).forEach(function (key) { if (key.indexOf('ondemand.') === 0 && key.indexOf('ondemand.demo.page.') !== 0) localStorage.removeItem(key); });
+          Object.keys(localStorage).forEach(function (key) { if (key.indexOf(ns + '.') === 0 && key.indexOf(ns + '.demo.page.') !== 0) localStorage.removeItem(key); });
         } catch (e) {}
         ['customer', 'provider'].forEach(function (app) {
           var frame = document.getElementById(app);
-          if (frame.getAttribute('src')) frame.src = app + '/';
+          if (frame.getAttribute('src')) frame.src = frameUrl(app);
         });
       });
 
