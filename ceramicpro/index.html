@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#E6007E">
+  <meta name="description" content="A booking app concept for Ceramic Pro, with sample data."><meta name="robots" content="noindex">
+  <title>Ceramic Pro app concept</title>
+  <link rel="icon" type="image/png" href="customer/favicon.png">
+  <style>
+    :root {
+      --brand: #E6007E;
+      --brand-soft: #FDE6F2;
+      --ink: #14161F;
+      --muted: #5C6273;
+      --line: #E3E6EE;
+      --page: #F5F7FB;
+      --card: #FFFFFF;
+    }
+    /* Dark follows the device until the visitor picks one with the header button (data-theme). */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { --brand-soft: #3A0D24; --ink: #ECEEF4; --muted: #A2A8B8; --line: #2A2F3D; --page: #0B0B0C; --card: #151518; }
+    }
+    :root[data-theme="dark"] { --brand-soft: #3A0D24; --ink: #ECEEF4; --muted: #A2A8B8; --line: #2A2F3D; --page: #0B0B0C; --card: #151518; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background: var(--page);
+      color: var(--ink);
+      font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+    }
+    [dir="rtl"] body { font-family: Tahoma, "Segoe UI", system-ui, sans-serif; }
+    a { color: var(--brand); }
+    button { font: inherit; cursor: pointer; }
+
+    header {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding: 14px 24px; border-bottom: 1px solid var(--line); background: var(--card);
+    }
+    header img { width: 36px; height: 36px; border-radius: 9px; }
+    header h1 { font-size: 18px; margin: 0; }
+    header .tag { font-size: 12px; color: var(--brand); background: var(--brand-soft); padding: 2px 8px; border-radius: 99px; }
+    header .spacer { flex: 1; }
+    .ghost { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 14px; border-radius: 8px; }
+    .ghost:hover { border-color: var(--brand); color: var(--brand); }
+    .ghost.icon { padding: 6px 8px; line-height: 0; }
+    .ghost.icon svg { width: 20px; height: 20px; fill: currentColor; }
+
+    .notice { margin: 0; padding: 8px 24px; font-size: 13px; color: var(--muted); background: var(--brand-soft); text-align: center; }
+    main { display: flex; gap: 32px; padding: 24px; justify-content: center; align-items: flex-start; }
+
+    .guide { width: 300px; flex: none; }
+    .guide h2 { font-size: 16px; margin: 0 0 4px; }
+    .guide p { color: var(--muted); margin: 0 0 14px; }
+    .guide ol { margin: 0; padding-inline-start: 20px; }
+    .guide li { margin-bottom: 10px; }
+    .guide li b { color: var(--ink); }
+    .code { font: 600 14px ui-monospace, Menlo, monospace; background: var(--brand-soft); color: var(--brand); padding: 1px 6px; border-radius: 6px; }
+    .note { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px; }
+    .credit { font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+    .phones { display: flex; gap: 28px; }
+    .phone { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .phone .label { font-weight: 600; }
+    .phone .label small { display: block; text-align: center; font-weight: 400; color: var(--muted); }
+    .frame {
+      /* The 390 x 820 screen plus the 12px bezel on every side. */
+      width: calc(414px * var(--scale)); height: calc(844px * var(--scale)); overflow: hidden;
+      border-radius: calc(48px * var(--scale)); padding: calc(12px * var(--scale));
+      background: #0B0D12; box-shadow: 0 0 0 1px var(--line), 0 20px 50px rgba(20, 30, 60, .18);
+    }
+    .frame iframe {
+      width: 390px; height: 820px; border: 0; border-radius: 36px; background: var(--brand);
+      transform: scale(var(--scale)); transform-origin: top left;
+    }
+    [dir="rtl"] .frame iframe { transform-origin: top right; }
+
+    /* Phones and narrow windows: pick an app and open it full screen. */
+    .choose { display: none; padding: 20px 16px 32px; max-width: 520px; margin: 0 auto; }
+    .choose a.app {
+      display: flex; align-items: center; gap: 14px; padding: 16px; margin-bottom: 12px; text-decoration: none;
+      color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    }
+    .choose a.app img { width: 56px; height: 56px; border-radius: 14px; }
+    .choose a.app b { display: block; font-size: 16px; }
+    .choose a.app span { color: var(--muted); font-size: 14px; }
+    .choose .guide { width: auto; margin-top: 20px; }
+
+    @media (max-width: 1080px) { .guide.side { display: none; } }
+    @media (max-width: 820px) {
+      main { display: none; }
+      .choose { display: block; }
+      header { padding: 12px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="customer/icons/Icon-192.png" alt="">
+    <h1 data-en="Ceramic Pro" data-ar="سيراميك برو">Ceramic Pro</h1>
+    <span class="tag" data-en="App concept · sample data" data-ar="تصوّر تطبيق · بيانات تجريبية">App concept · sample data</span>
+    <span class="spacer"></span>
+    <button class="ghost icon" id="theme" type="button"></button>
+    <button class="ghost" id="lang">عربي</button>
+    <button class="ghost" id="reset" data-en="Reset demo" data-ar="إعادة ضبط">Reset demo</button>
+  </header>
+  <p class="notice" data-en="A concept prepared for Ceramic Pro: what your own booking app could look like. Not an official Ceramic Pro service. Services, prices and branches are from ceramicpro.sa; people, bookings and pictures are samples." data-ar="تصوّر مُعدّ لسيراميك برو: كيف يمكن أن يبدو تطبيق الحجز الخاص بكم. ليس خدمة رسمية من سيراميك برو. الخدمات والأسعار والفروع من ceramicpro.sa، أما الأشخاص والطلبات والصور فتجريبية."></p>
+
+  <main>
+    <section class="guide side" id="guide"></section>
+    <div class="phones">
+      <div class="phone">
+        <div class="label"><span data-en="Customer app" data-ar="تطبيق العميل">Customer app</span>
+          <small data-en="Signed in as Sara" data-ar="باسم سارة">Signed in as Sara</small></div>
+        <div class="frame"><iframe id="customer" title="Customer app" allow="clipboard-write"></iframe></div>
+      </div>
+      <div class="phone">
+        <div class="label"><span data-en="Technician app" data-ar="تطبيق الفني">Technician app</span>
+          <small data-en="Signed in as Ali, Sulaimaniyah branch" data-ar="باسم علي، فرع السليمانية">Signed in as Ali, Sulaimaniyah branch</small></div>
+        <div class="frame"><iframe id="provider" title="Technician app" allow="clipboard-write"></iframe></div>
+      </div>
+    </div>
+  </main>
+
+  <section class="choose">
+    <a class="app" href="customer/">
+      <img src="customer/icons/Icon-192.png" alt="">
+      <div><b data-en="Customer app" data-ar="تطبيق العميل">Customer app</b>
+        <span data-en="Book protection, tinting and polishing" data-ar="احجز الحماية والعزل والتلميع">Book protection, tinting and polishing</span></div>
+    </a>
+    <a class="app" href="provider/">
+      <img src="provider/icons/Icon-192.png" alt="">
+      <div><b data-en="Technician app" data-ar="تطبيق الفني">Technician app</b>
+        <span data-en="The branch team's jobs and schedule" data-ar="طلبات فريق الفرع ومواعيده">The branch team's jobs and schedule</span></div>
+    </a>
+    <section class="guide" id="guide-mobile"></section>
+  </section>
+
+  <template id="guide-en">
+    <h2>Try a full booking</h2>
+    <p>Everything runs in your browser with sample data. Nothing is sent anywhere.</p>
+    <ol>
+      <li><b>Sign in</b> to both apps with any mobile number (05…) and the code <span class="code">141988</span>.</li>
+      <li>In the <b>customer app</b>, pick <b>Wash and polishing › Professional wash</b>, choose <b>سيراميك برو - السليمانية</b>, a time and <b>cash</b>.</li>
+      <li>In the <b>technician app</b>, open the offer and <b>accept</b> it.</li>
+      <li>Tap <b>On my way</b>. The customer sees the arrival time and a 4-digit <b>start code</b>.</li>
+      <li>Enter the code to <b>start</b>, then <b>complete</b> the job and confirm the cash.</li>
+      <li><b>Rate</b> each other and add a <b>tip</b> from the customer app.</li>
+    </ol>
+    <p class="note">Sara also has an exterior polishing visit booked for tomorrow, already in Ali's jobs. Try the
+      summer offer, tow truck, favourite branches, booking history, loyalty points, chat and support too. On a phone,
+      open an app and use <b>Add to Home Screen</b>. Payments use a test gateway that approves instantly; maps, push
+      notifications and the AI assistant are placeholders in this concept.</p>
+    <p class="credit">Placeholder pictures drawn from Google's Material Icons (CC BY 4.0).</p>
+  </template>
+  <template id="guide-ar">
+    <h2>جرّب طلباً كاملاً</h2>
+    <p>كل شيء يعمل داخل المتصفح ببيانات تجريبية، ولا يُرسل أي شيء.</p>
+    <ol>
+      <li><b>سجّل الدخول</b> في التطبيقين بأي رقم جوال (05…) والرمز <span class="code">141988</span>.</li>
+      <li>في <b>تطبيق العميل</b> اختر <b>الغسيل والتلميع › غسيل احترافي</b>، ثم <b>سيراميك برو - السليمانية</b> وموعداً والدفع <b>نقداً</b>.</li>
+      <li>في <b>تطبيق الفني</b> افتح العرض و<b>اقبله</b>.</li>
+      <li>اضغط <b>في الطريق</b>، فيرى العميل وقت الوصول و<b>رمز البدء</b> المكوّن من 4 أرقام.</li>
+      <li>أدخل الرمز لـ<b>بدء</b> العمل، ثم <b>أنهِ</b> الطلب وأكّد استلام المبلغ.</li>
+      <li><b>قيّما</b> بعضكما، وأضف <b>إكرامية</b> من تطبيق العميل.</li>
+    </ol>
+    <p class="note">لدى سارة أيضاً موعد تلميع خارجي غداً، وهو ظاهر في طلبات علي. جرّب كذلك عرض الصيف والسطحة والفروع
+      المفضلة وسجل الطلبات ونقاط الولاء والمحادثة والدعم. على الجوال افتح أحد التطبيقين واختر <b>إضافة إلى الشاشة
+      الرئيسية</b>. الدفع عبر بوابة تجريبية توافق فوراً، والخرائط والإشعارات والمساعد الذكي محاكاة في هذا التصوّر.</p>
+    <p class="credit">الصور التجريبية مرسومة من أيقونات Material من Google (رخصة CC BY 4.0).</p>
+  </template>
+
+  <script>
+    (function () {
+      // Starts every key this demo keeps in the browser; a brand demo (tool/brand.py) has its own, matching the apps'
+      // Brand.storagePrefix, so it can share a site with the main demo. A brand may also start in a set theme.
+      var ns = 'ceramicpro';
+      var defaultTheme = 'dark';
+      var lang = 'en';
+      try { lang = localStorage.getItem(ns + '.demo.page.lang') || (navigator.language || '').slice(0, 2); } catch (e) {}
+      if (lang !== 'ar') lang = 'en';
+
+      function apply() {
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        document.querySelectorAll('[data-en]').forEach(function (el) { el.textContent = el.dataset[lang]; });
+        document.getElementById('lang').textContent = lang === 'ar' ? 'English' : 'عربي';
+        var guide = document.getElementById('guide-' + lang).innerHTML;
+        document.getElementById('guide').innerHTML = guide;
+        document.getElementById('guide-mobile').innerHTML = guide;
+        applyTheme();
+      }
+
+      // Light or dark for the page and both apps: the apps read the saved choice when they start and follow the
+      // channel's {"theme": ...} messages while open (followDemoTheme in packages/core).
+      var themeKey = ns + '.demo.page.theme';
+      var theme = null;
+      try { theme = localStorage.getItem(themeKey); } catch (e) {}
+      if (!theme && defaultTheme) {
+        theme = defaultTheme;
+        try { localStorage.setItem(themeKey, theme); } catch (e) {}
+      }
+      var deviceDark = window.matchMedia('(prefers-color-scheme: dark)');
+      var channel = 'BroadcastChannel' in window ? new BroadcastChannel(ns + '-demo') : null;
+      var icons = {
+        sun: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42zm12.02 12.02 1.42-1.42 2.12 2.12-1.42 1.42zM4.22 18.36l2.12-2.12 1.42 1.42-2.12 2.12zM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12z"/></svg>',
+        moon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.3 2a9.5 9.5 0 1 0 9.7 11.6A7.5 7.5 0 0 1 12.3 2z"/></svg>'
+      };
+
+      function isDark() { return theme ? theme === 'dark' : deviceDark.matches; }
+
+      function applyTheme() {
+        if (theme) document.documentElement.dataset.theme = theme;
+        else delete document.documentElement.dataset.theme;
+        var button = document.getElementById('theme');
+        button.innerHTML = isDark() ? icons.sun : icons.moon;
+        var label = isDark() ? (lang === 'ar' ? 'الوضع الفاتح' : 'Light mode') : (lang === 'ar' ? 'الوضع الداكن' : 'Dark mode');
+        button.title = label;
+        button.setAttribute('aria-label', label);
+      }
+
+      document.getElementById('theme').addEventListener('click', function () {
+        theme = isDark() ? 'light' : 'dark';
+        try { localStorage.setItem(themeKey, theme); } catch (e) {}
+        if (channel) channel.postMessage(JSON.stringify({ theme: theme }));
+        applyTheme();
+      });
+      deviceDark.addEventListener('change', applyTheme);
+
+      // Fit both phones in the window's height.
+      function fit() {
+        var scale = Math.max(0.55, Math.min(1, (window.innerHeight - 150) / 844));
+        document.documentElement.style.setProperty('--scale', scale.toFixed(3));
+      }
+
+      function load() {
+        if (window.innerWidth <= 820) return;
+        ['customer', 'provider'].forEach(function (app) {
+          var frame = document.getElementById(app);
+          if (!frame.getAttribute('src')) frame.src = app + '/';
+        });
+      }
+
+      document.getElementById('lang').addEventListener('click', function () {
+        lang = lang === 'ar' ? 'en' : 'ar';
+        try { localStorage.setItem(ns + '.demo.page.lang', lang); } catch (e) {}
+        apply();
+      });
+
+      // Starts over: the sample data and both apps' sign-ins (the page's own language and theme stay).
+      document.getElementById('reset').addEventListener('click', function () {
+        var message = lang === 'ar' ? 'إعادة البيانات التجريبية لحالتها الأولى؟' : 'Put the sample data back the way it started?';
+        if (!confirm(message)) return;
+        try {
+          Object.keys(localStorage).forEach(function (key) { if (key.indexOf(ns + '.') === 0 && key.indexOf(ns + '.demo.page.') !== 0) localStorage.removeItem(key); });
+        } catch (e) {}
+        ['customer', 'provider'].forEach(function (app) {
+          var frame = document.getElementById(app);
+          if (frame.getAttribute('src')) frame.src = app + '/';
+        });
+      });
+
+      window.addEventListener('resize', function () { fit(); load(); });
+      apply();
+      fit();
+      load();
+    })();
+  </script>
+</body>
+</html>
