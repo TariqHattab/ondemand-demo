@@ -1,11 +1,11 @@
 {
-    "name": "Ceramic Pro Team",
-    "short_name": "Ceramic Pro Team",
+    "name": "Lamaa",
+    "short_name": "Lamaa",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#E6007E",
     "theme_color": "#E6007E",
-    "description": "Jobs and schedule for Ceramic Pro technicians",
+    "description": "Book car protection, tinting and polishing",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
