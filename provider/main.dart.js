@@ -157686,12 +157686,13 @@ s=A.C(a)
 r=this.c
 q=r.ga07()
 p=q>0
+if(p){o=s.ax
+n=o.id
+m=n==null?o.fy:n}else m=i
 o=s.ax
-if(p){n=o.id
-m=n==null?o.fy:n}else{n=o.d
-m=n==null?o.b:n}if(p){n=o.k1
-l=n==null?o.go:n}else{n=o.e
-l=n==null?o.c:n}o=h.gazF()
+if(p){n=o.k1
+l=n==null?o.go:n}else l=o.k3
+o=h.gazF()
 n=s.ok
 k=n.as
 o=A.E(o,i,i,i,i,i,k==null?i:k.aM(l),i,i,i)

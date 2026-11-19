@@ -39,7 +39,6 @@
     }
     header img { width: 36px; height: 36px; border-radius: 9px; }
     header h1 { font-size: 18px; margin: 0; }
-    header .tag { font-size: 12px; color: var(--brand); background: var(--brand-soft); padding: 2px 8px; border-radius: 99px; }
     header .spacer { flex: 1; }
     .ghost { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 14px; border-radius: 8px; }
     .ghost:hover { border-color: var(--brand); color: var(--brand); }
@@ -97,11 +96,10 @@
   <header>
     <img src="customer/icons/Icon-192.png" alt="">
     <h1 data-en="Lamaa" data-ar="لمعة">Lamaa</h1>
-    <span class="tag" data-en="Demo with sample data" data-ar="نسخة تجريبية ببيانات وهمية">Demo with sample data</span>
     <span class="spacer"></span>
     <button class="ghost icon" id="theme" type="button"></button>
     <button class="ghost" id="lang">عربي</button>
-    <button class="ghost" id="reset" data-en="Reset demo" data-ar="إعادة ضبط">Reset demo</button>
+    <button class="ghost" id="reset" data-en="Start over" data-ar="البدء من جديد">Start over</button>
   </header>
 
   <main>
@@ -136,35 +134,33 @@
 
   <template id="guide-en">
     <h2>Try a full booking</h2>
-    <p>Everything runs in your browser with sample data. Nothing is sent anywhere.</p>
+    <p>Sara books a visit in the customer app; Ali gets it in the technician app.</p>
     <ol>
-      <li><b>Sign in</b> to both apps with any mobile number (05…) and the code <span class="code">141988</span>.</li>
-      <li>In the <b>customer app</b>, pick <b>Wash and polishing › Professional wash</b>, choose <b>لمعة - السليمانية</b>, a time and <b>cash</b>.</li>
+      <li>In the <b>customer app</b>, tap <b>Schedule</b>, pick <b>Professional wash</b>, choose <b>لمعة - السليمانية</b>, a time and <b>cash</b>.</li>
       <li>In the <b>technician app</b>, open the offer and <b>accept</b> it.</li>
       <li>Tap <b>On my way</b>. The customer sees the arrival time and a 4-digit <b>start code</b>.</li>
       <li>Enter the code to <b>start</b>, then <b>complete</b> the job and confirm the cash.</li>
       <li><b>Rate</b> each other and add a <b>tip</b> from the customer app.</li>
     </ol>
     <p class="note">Sara also has an exterior polishing visit booked for tomorrow, already in Ali's jobs. Try the
-      summer offer, tow truck, favourite branches, booking history, loyalty points, chat and support too. On a phone,
-      open an app and use <b>Add to Home Screen</b>. Payments use a test gateway that approves instantly; maps, push
-      notifications and the AI assistant are placeholders in this concept.</p>
+      summer offer, an urgent tow truck, search, favourite branches, booking history, loyalty points, chat and support
+      too. On a phone, open an app and use <b>Add to Home Screen</b>; signing in takes any mobile number (05…) and the
+      code <span class="code">141988</span>.</p>
     <p class="credit">Photos from Pexels (free licence); people's pictures drawn from Google's Material Icons (CC BY 4.0).</p>
   </template>
   <template id="guide-ar">
     <h2>جرّب طلباً كاملاً</h2>
-    <p>كل شيء يعمل داخل المتصفح ببيانات تجريبية، ولا يُرسل أي شيء.</p>
+    <p>تحجز سارة زيارة من تطبيق العميل، ويستلمها علي في تطبيق الفني.</p>
     <ol>
-      <li><b>سجّل الدخول</b> في التطبيقين بأي رقم جوال (05…) والرمز <span class="code">141988</span>.</li>
-      <li>في <b>تطبيق العميل</b> اختر <b>الغسيل والتلميع › غسيل احترافي</b>، ثم <b>لمعة - السليمانية</b> وموعداً والدفع <b>نقداً</b>.</li>
+      <li>في <b>تطبيق العميل</b> اضغط <b>موعد مجدول</b> واختر <b>غسيل احترافي</b>، ثم <b>لمعة - السليمانية</b> وموعداً والدفع <b>نقداً</b>.</li>
       <li>في <b>تطبيق الفني</b> افتح العرض و<b>اقبله</b>.</li>
       <li>اضغط <b>في الطريق</b>، فيرى العميل وقت الوصول و<b>رمز البدء</b> المكوّن من 4 أرقام.</li>
       <li>أدخل الرمز لـ<b>بدء</b> العمل، ثم <b>أنهِ</b> الطلب وأكّد استلام المبلغ.</li>
       <li><b>قيّما</b> بعضكما، وأضف <b>إكرامية</b> من تطبيق العميل.</li>
     </ol>
-    <p class="note">لدى سارة أيضاً موعد تلميع خارجي غداً، وهو ظاهر في طلبات علي. جرّب كذلك عرض الصيف والسطحة والفروع
-      المفضلة وسجل الطلبات ونقاط الولاء والمحادثة والدعم. على الجوال افتح أحد التطبيقين واختر <b>إضافة إلى الشاشة
-      الرئيسية</b>. الدفع عبر بوابة تجريبية توافق فوراً، والخرائط والإشعارات والمساعد الذكي محاكاة في هذا التصوّر.</p>
+    <p class="note">لدى سارة أيضاً موعد تلميع خارجي غداً، وهو ظاهر في طلبات علي. جرّب كذلك عرض الصيف وطلب سطحة عاجلة
+      والبحث والفروع المفضلة وسجل الطلبات ونقاط الولاء والمحادثة والدعم. على الجوال افتح أحد التطبيقين واختر <b>إضافة
+      إلى الشاشة الرئيسية</b>، والدخول بأي رقم جوال (05…) والرمز <span class="code">141988</span>.</p>
     <p class="credit">الصور من Pexels (رخصة مجانية)، وصور الأشخاص مرسومة من أيقونات Material من Google (رخصة CC BY 4.0).</p>
   </template>
 
@@ -231,21 +227,25 @@
         document.documentElement.style.setProperty('--scale', scale.toFixed(3));
       }
 
+      // In a frame the apps start in the page's language, already signed in (startInDemoFrame in packages/core).
+      function frameUrl(app) { return app + '/?frame=1&lang=' + lang; }
+
       function load() {
         if (window.innerWidth <= 820) return;
         ['customer', 'provider'].forEach(function (app) {
           var frame = document.getElementById(app);
-          if (!frame.getAttribute('src')) frame.src = app + '/';
+          if (!frame.getAttribute('src')) frame.src = frameUrl(app);
         });
       }
 
       document.getElementById('lang').addEventListener('click', function () {
         lang = lang === 'ar' ? 'en' : 'ar';
         try { localStorage.setItem(ns + '.demo.page.lang', lang); } catch (e) {}
+        if (channel) channel.postMessage(JSON.stringify({ lang: lang }));
         apply();
       });
 
-      // Starts over: the sample data and both apps' sign-ins (the page's own language and theme stay).
+      // Starts over: the sample data and both apps' saved state (the page's own language and theme stay).
       document.getElementById('reset').addEventListener('click', function () {
         var message = lang === 'ar' ? 'إعادة البيانات التجريبية لحالتها الأولى؟' : 'Put the sample data back the way it started?';
         if (!confirm(message)) return;
@@ -254,7 +254,7 @@
         } catch (e) {}
         ['customer', 'provider'].forEach(function (app) {
           var frame = document.getElementById(app);
-          if (frame.getAttribute('src')) frame.src = app + '/';
+          if (frame.getAttribute('src')) frame.src = frameUrl(app);
         });
       });
 
